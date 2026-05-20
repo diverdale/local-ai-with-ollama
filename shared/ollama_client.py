@@ -15,7 +15,7 @@ DEFAULT_HOST = "http://192.168.2.20:11434"
 
 def get_client() -> Client:
     """Return an Ollama client for OLLAMA_HOST, or exit with a clear message."""
-    load_dotenv()
+    load_dotenv()  # read .env so OLLAMA_HOST works without a manual export
     host = os.getenv("OLLAMA_HOST", DEFAULT_HOST)
     client = Client(host=host)
     try:
@@ -32,18 +32,7 @@ def get_client() -> Client:
 
 def list_models(client: Client) -> set[str]:
     """Return the set of model names available on the host."""
-    response = client.list()
-    raw = getattr(response, "models", None)
-    if raw is None and isinstance(response, dict):
-        raw = response.get("models", [])
-    names: set[str] = set()
-    for item in raw or []:
-        name = getattr(item, "model", None)
-        if name is None and isinstance(item, dict):
-            name = item.get("model") or item.get("name")
-        if name:
-            names.add(name)
-    return names
+    return {m.model for m in client.list().models if m.model}
 
 
 def require_model(client: Client, model: str) -> None:
