@@ -8,16 +8,15 @@ from rich.table import Table
 from shared.ollama_client import get_client
 
 client = get_client()
-response = client.list()
-models = getattr(response, "models", None) or []
+models = client.list().models
 
 table = Table(title="Models installed on the Ollama host")
 table.add_column("Name", style="cyan")
 table.add_column("Size", justify="right", style="green")
 
 for model in models:
-    size_bytes = getattr(model, "size", 0) or 0
-    table.add_row(getattr(model, "model", "?"), f"{size_bytes / 1e9:.1f} GB")
+    size_gb = (model.size or 0) / 1e9
+    table.add_row(model.model, f"{size_gb:.1f} GB")
 
 print(table)
 print(
