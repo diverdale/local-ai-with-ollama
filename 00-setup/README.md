@@ -62,13 +62,13 @@ cp .env.example .env
 uv run 00-setup/01_check_connection.py
 
 # Inspect what models are installed:
-uv run 00-setup/02_list_and_pull.py
+uv run 00-setup/02_list_models.py
 ```
 
 ## Expected output
 
 `01_check_connection.py` prints `Connected to Ollama.` followed by the list of
-installed models. `02_list_and_pull.py` prints a table of models with sizes.
+installed models. `02_list_models.py` prints a table of models with sizes.
 
 ## Talking points
 

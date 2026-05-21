@@ -1,6 +1,6 @@
 """Lesson 00 - Step 2: inspect installed models and learn how to pull new ones.
 
-Run it:  uv run 00-setup/02_list_and_pull.py
+Run it:  uv run 00-setup/02_list_models.py
 """
 from rich import print
 from rich.table import Table
